@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rottami Modica | Prenota un ritiro</title>
+<meta name="description" content="Prenota un ritiro di rottami metallici a Modica e provincia di Ragusa.">
+<style>
+:root{--bg:#f3f5f4;--card:#fff;--ink:#17201d;--muted:#65716c;--accent:#16834b;--accent2:#0d6739;--line:#dce3df}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:#17201d;color:#fff;padding:28px 20px}.wrap{max-width:900px;margin:auto}.brand{font-weight:800;font-size:24px}.sub{color:#cbd4d0;margin-top:5px}
+.hero{padding:42px 20px 25px;text-align:center}.hero h1{font-size:clamp(30px,6vw,48px);margin:0 0 10px}.hero p{color:var(--muted);font-size:18px;margin:0 auto;max-width:650px}
+.card{background:var(--card);max-width:720px;margin:20px auto 50px;padding:25px;border-radius:20px;box-shadow:0 8px 30px #0000000b}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:650px){.grid{grid-template-columns:1fr}}
+label{font-weight:700;font-size:14px;display:block;margin:0 0 7px}input,select,textarea{width:100%;padding:13px;border:1px solid var(--line);border-radius:11px;font:inherit;background:#fff}textarea{min-height:100px;resize:vertical}.full{grid-column:1/-1}
+button{width:100%;border:0;border-radius:12px;padding:15px;background:var(--accent);color:#fff;font-size:17px;font-weight:800;cursor:pointer}button:hover{background:var(--accent2)}
+.note{font-size:13px;color:var(--muted);margin-top:12px;line-height:1.5}.contact{text-align:center;margin-top:20px}.phone{font-size:22px;font-weight:800;color:var(--accent)}
+.success{display:none;background:#e8f7ef;border:1px solid #b9e5ca;padding:15px;border-radius:12px;margin-bottom:18px}
+footer{text-align:center;color:var(--muted);padding:25px;font-size:13px}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="brand">♻️ Rottami Modica</div><div class="sub">Raccolta rottami ferrosi e metalli</div></div></header>
+
+<section class="hero wrap">
+<h1>Prenota un ritiro</h1>
+<p>Richiedi un appuntamento per il ritiro del materiale a Modica e provincia di Ragusa.</p>
+</section>
+
+<main class="card">
+<div id="success" class="success">Richiesta preparata! Si aprirà WhatsApp con il riepilogo dell'appuntamento. Controlla il messaggio e invialo.</div>
+<form id="booking">
+<div class="grid">
+<div><label for="name">Nome e cognome *</label><input id="name" required></div>
+<div><label for="phone">Telefono *</label><input id="phone" type="tel" required></div>
+<div><label for="date">Data richiesta *</label><input id="date" type="date" required></div>
+<div><label for="time">Fascia oraria *</label>
+<select id="time" required><option value="">Seleziona</option><option>08:00 - 10:00</option><option>10:00 - 12:00</option><option>12:00 - 14:00</option><option>14:00 - 16:00</option><option>16:00 - 18:00</option></select></div>
+<div><label for="area">Comune *</label><input id="area" value="Modica" required></div>
+<div><label for="material">Materiale *</label>
+<select id="material" required><option value="">Seleziona</option><option>Ferro</option><option>Acciaio</option><option>Alluminio</option><option>Rame</option><option>Misto</option><option>Altro</option></select></div>
+<div class="full"><label for="address">Indirizzo del ritiro *</label><input id="address" required placeholder="Via, numero civico"></div>
+<div class="full"><label for="details">Descrizione / quantità indicativa</label><textarea id="details" placeholder="Es. vecchia ringhiera, circa 200 kg..."></textarea></div>
+<div class="full"><button type="submit">📅 Richiedi appuntamento su WhatsApp</button></div>
+</div>
+<p class="note">L'appuntamento viene richiesto tramite WhatsApp e sarà confermato dopo il contatto. Il servizio è soggetto alle condizioni e alle autorizzazioni applicabili.</p>
+</form>
+<div class="contact">Per informazioni: <div class="phone">350 574 9443</div></div>
+</main>
+<footer>© 2026 Rottami Modica · Modica e provincia di Ragusa</footer>
+
+<script>
+const d=document.getElementById('date');
+d.min=new Date().toISOString().split('T')[0];
+document.getElementById('booking').addEventListener('submit',e=>{
+ e.preventDefault();
+ const data={
+  name:document.getElementById('name').value.trim(),
+  phone:document.getElementById('phone').value.trim(),
+  date:document.getElementById('date').value,
+  time:document.getElementById('time').value,
+  area:document.getElementById('area').value.trim(),
+  material:document.getElementById('material').value,
+  address:document.getElementById('address').value.trim(),
+  details:document.getElementById('details').value.trim()
+ };
+ const msg=`Ciao, vorrei prenotare un ritiro di rottami.%0A%0A👤 Nome: ${encodeURIComponent(data.name)}%0A📞 Telefono: ${encodeURIComponent(data.phone)}%0A📅 Data: ${encodeURIComponent(data.date)}%0A🕐 Fascia: ${encodeURIComponent(data.time)}%0A📍 Comune: ${encodeURIComponent(data.area)}%0A🏠 Indirizzo: ${encodeURIComponent(data.address)}%0A♻️ Materiale: ${encodeURIComponent(data.material)}%0A📝 Note: ${encodeURIComponent(data.details || 'Nessuna')}`;
+ document.getElementById('success').style.display='block';
+ window.open(`https://wa.me/393505749443?text=${msg}`,'_blank');
+});
+</script>
+</body>
+</html>
